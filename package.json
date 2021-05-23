@@ -8,11 +8,15 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.20.13",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.2",
-    "pg": "^8.2.1",
-    "sqlite3": "^4.2.0"
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  },
   "scripts": {
     "dev": "nodemon src/server"
   },

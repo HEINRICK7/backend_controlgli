@@ -9,8 +9,8 @@ const SessionController = require('./controllers/SessionController');
 routes.post('/users', UserController.store);
 routes.get('/users', UserController.index);
 
-routes.post('/results', ResultController.store);
-routes.get('/results', ResultController.index);
+routes.post('/users/:user_id/results', ResultController.store);
+routes.get('/users/:user_id/results', ResultController.index);
 routes.delete('/results/:id', ResultController.destroy);
 
 routes.get('/profile', ProfileController.index);

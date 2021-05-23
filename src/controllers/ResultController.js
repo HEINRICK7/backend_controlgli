@@ -1,48 +1,45 @@
-const connection = require('../database/connections');
+const Results = require('../models/Result');
+const User = require('../models/User')
 
 module.exports = {
     
     async store(req, res){
-        const { result, created_at, description } = req.body;
-        const user_id = req.headers.authorization;
+        const { user_id } = req.params;
+        const { result, date, description } = req.body;
 
-        if(result !== '' && created_at !== '' && description !== ''){
-
-        
-            const [id] = await connection('results').insert({
+        const user = await User.findByPk(user_id);
+        try {
+            if(!user) {
+                return res.status(400).json({error: 'Usuario nao encontrado'})            
+            }else {
+            const results = await Results.create({
                 result,
-                created_at,
+                date,
                 description,
-                user_id,
+                user_id
             });
+    
+            return res.json(results);
 
-            return res.json({ id });
-        }else{
+            }
+    
             
-            return res.json({message: 'Preencha todos os campos.'})
+        } catch (error) {
+            return res.status(500).json({error: "error"});
         }
+       
+        
     },
     async index(req, res){
+        const { user_id } = req.params;
 
-        const { page = 1 } = req.query;
+        const user = await User.findByPk(user_id, {
+            include: {
+                association: 'results'
+            }
+        });
 
-        const [ count ] = await connection('results').count();
-
-        const results = await connection('results')
-        .join('users', 'users.id', '=', 'results.user_id')
-        .limit(5)
-        .offset((page - 1) * 5)
-        .select( [
-            'results.*',
-            'users.firstName',
-            'users.lastName',
-            'users.date',
-            'users.email',
-            
-        ])
-
-        res.header('X-Total-Count', count['count(*)']);
-
+        const results = await Results.findAll({ where: { user_id }});       
         return res.json(results);
     },
     async destroy(req, res){
