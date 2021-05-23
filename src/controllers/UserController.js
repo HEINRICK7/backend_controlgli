@@ -35,7 +35,8 @@ module.exports = {
                     email,
                     password: hash,
                 });
-            
+                user.password = undefined;
+                
                 return res.json(users)
             
             }
