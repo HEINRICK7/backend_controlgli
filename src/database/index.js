@@ -1,15 +1,15 @@
-const Sequelize = require('sequelize');
-const dbConfig = require('../config/database');
+const mongoose = require('mongoose');
 
-const User = require('../models/User');
-const Result = require('../models/Result');
+const mongoURI = process.env.MONGO_URL
 
-const connection = new Sequelize(dbConfig);
+mongoose.connect( mongoURI, 
+{   
+    useUnifiedTopology: true, 
+    useNewUrlParser: true, 
+    useNewUrlParser: true 
+}) 
+.then(() => console.log("MongoDB connected")) 
+.catch((err) => console.log(err));
 
-User.init(connection);
-Result.init(connection);
 
-User.associate(connection.models);
-Result.associate(connection.models);
-
-module.exports = connection;
+module.exports = mongoose;
