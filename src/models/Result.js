@@ -1,21 +1,31 @@
-const { Model, DataTypes } = require('sequelize');
 
-class Result extends Model {
-    static init(sequelize) {
-        super.init({
-            result: DataTypes.STRING,
-            date:DataTypes.STRING,
-            description:DataTypes.STRING,
-        
-        }, {
-            sequelize
-        })
-    }
+const mongoose = require('../database');
 
-    static associate(models) {
-        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user'});
+const ResultSchema = new mongoose.Schema({
+    
+    result: {
+        type: String,
+        require: true,
+    },
+    date: {
+        type: String,
+        require: true,
+    },
+    description: {
+        type: String,
+        require: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    user_id:[{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref:'User',
+        require: true
+    }]
+});
 
-    }
-}
+const Result= mongoose.model('Result', ResultSchema);
 
 module.exports = Result;
