@@ -7,7 +7,7 @@ module.exports = {
         const { user_id } = req.params;
         const { result, date, description } = req.body;
 
-        const user = await User.findByPk(user_id);
+        const user = await User.findOne({user_id});
         try {
             if(!user) {
                 return res.status(400).json({error: 'Usuario nao encontrado'})            
@@ -39,7 +39,7 @@ module.exports = {
             }
         });
 
-        const results = await Results.findAll({ where: { user_id }});       
+        const results = await Results.findAll({ user_id });       
         return res.json(results);
     },
     async destroy(req, res){
