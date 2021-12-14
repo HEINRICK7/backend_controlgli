@@ -1,13 +1,9 @@
-const connection = require('../database');
+const Result = require('../models/Result')
 
 module.exports = {
     async index(req, res){
-        const user_id = req.headers.authorization;
-
-
-        const results = await connection('results')
-            .where('user_id', user_id)
-            .select(' * ');
+        
+        const results = await Result.find().populate('user_id');
 
         return res.json(results)    
 
