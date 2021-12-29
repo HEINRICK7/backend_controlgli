@@ -1,4 +1,4 @@
-const Results = require('../models/Result');
+const Result = require('../models/Result');
 const User = require('../models/User')
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
             if(!user) {
                 return res.status(400).json({error: 'Usuario nao encontrado'})            
             }else {
-            const results = await Results.create({
+            const results = await Result.create({
                 result,
                 date,
                 description,
@@ -31,33 +31,23 @@ module.exports = {
         
     },
     async index(req, res){
-        const { user_id } = req.params;
+        
+        const results = await Result.find()
 
-        const user = await User.findByPk(user_id, {
-            include: {
-                association: 'results'
-            }
-        });
-
-        const results = await Results.findAll({ user_id });       
-        return res.json(results);
+        return res.json(results)    
+    
+    
     },
     async destroy(req, res){
-        const { id } = req.params;
-        const user_id = req.headers.authorization;
-
-        const result = await connection('results')
-            .where('id', id)
-            .select('user_id')
-            .first();
-
-        if(result.user_id !== user_id){
-
-            return res.status(401).json({error: 'Operation not permitted'});
-        }    
-
-        await connection('results').where('id', id).delete();
-
-        return res.status(204).send();
+        try {
+            await Result.findByIdAndRemove(req.params._id);
+             res.status(200).send({
+                 message: 'Arquivo removido com sucesso!'
+             })
+         } catch (error) {
+ 
+            res.status(400).send({ error: 'Error deleting'});
+             
+         }
     }
 };
