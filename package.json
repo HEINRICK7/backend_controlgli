@@ -15,7 +15,8 @@
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "dev": "nodemon src/server"
+    "dev": "nodemon src/server",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
