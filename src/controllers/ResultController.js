@@ -31,8 +31,8 @@ module.exports = {
         
     },
     async index(req, res){
-        
-        const results = await Result.find()
+        const { user_id } = req.params;
+        const results = await Result.find({user_id}).populate('user_id')
 
         return res.json(results)    
     

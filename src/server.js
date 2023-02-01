@@ -1,6 +1,7 @@
 require('dotenv').config();
-
+const mongoose = require('mongoose');
 const express = require('express');
+
 const cors = require('cors');
 const morgan = require('morgan')
 
@@ -19,7 +20,11 @@ app.use(router);
 
 const port = process.env.PORT || 3333;
 
-
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, function(error) {
+    if (error) {
+      console.error(error);
+      process.exit(1);
+    } else {
 app.listen( port, (err)=>{
     if(err){
         console.log(err);
@@ -27,5 +32,5 @@ app.listen( port, (err)=>{
          console.log(`connected server http://localhost:${port}`);
     }     
 })
-    
-   
+    }
+})

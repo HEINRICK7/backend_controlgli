@@ -12,7 +12,7 @@ routes.post('/users', UserController.store);
 routes.get('/users', authMiddleware, UserController.index);
 
 routes.post('/users/:user_id/results', authMiddleware, ResultController.store);
-routes.get('/users/:_id/results', authMiddleware, ResultController.index);
+routes.get('/users/:user_id/results', authMiddleware, ResultController.index);
 routes.delete('/results/:_id',authMiddleware, ResultController.destroy);
 
 routes.get('/profile',authMiddleware, ProfileController.index);
