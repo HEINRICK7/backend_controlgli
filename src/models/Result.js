@@ -1,5 +1,5 @@
 
-const mongoose = require('../database');
+const mongoose = require('mongoose');
 
 const ResultSchema = new mongoose.Schema({
     
