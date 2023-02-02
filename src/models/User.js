@@ -29,6 +29,11 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  role: {
+    type: String,
+    default: 'user',
+    enum: ["user", "admin"]
+  },
 });
 UserSchema.pre("save", async function (next) {
   const hash = await bcrypt.hash(this.password, 10);

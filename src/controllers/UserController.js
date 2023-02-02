@@ -8,7 +8,7 @@ module.exports = {
     },
 
     async store(req, res){
-        const { first_name, last_name, date, email, password } = req.body;
+        const { first_name, last_name, date, email, password, role } = req.body;
         
 
         const user = await User.findOne({email})
@@ -29,7 +29,8 @@ module.exports = {
                         last_name,
                         date,
                         email,
-                        password
+                        password,
+                        role
                     });
                 
                     return res.status(200).json({message: "Usuario cadastrodo com sucesso"})
