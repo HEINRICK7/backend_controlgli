@@ -24,7 +24,7 @@ module.exports = {
                 }
                 else {
 
-                    await User.create({
+                    const user = await User.create({
                         first_name,
                         last_name,
                         date,
@@ -33,7 +33,7 @@ module.exports = {
                         role
                     });
                 
-                    return res.status(200).json({message: "Usuario cadastrodo com sucesso"})
+                    return res.status(200).json(user)
                 
                 }
             }

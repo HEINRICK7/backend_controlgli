@@ -30,9 +30,8 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   role: {
-    type: String,
-    default: 'user',
-    enum: ["user", "admin"]
+    type: Number,
+    default: 0
   },
 });
 UserSchema.pre("save", async function (next) {
